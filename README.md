@@ -15,7 +15,7 @@ A beautiful, modern, interactive, and fully responsive **Currency Converter Web 
 ## 🌐 Live Preview
 
 You can view and test the application live here:
-👉 **[CurrencyFlow Preview](https://github.com/Hanumatejav/Currency_converter_latest)** *(Enable GitHub Pages in your repository settings to host it instantly)*
+👉 **[CurrencyFlow Preview](https://hanumatejav.github.io/Currency_converter_latest/)** *(Enable GitHub Pages in your repository settings to host it instantly)*
 
 ---
 
