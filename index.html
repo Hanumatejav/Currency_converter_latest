@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CurrencyFlow — Modern Currency Converter</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-['Inter'] min-h-screen flex flex-col justify-between relative overflow-x-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 dark:from-gray-950 dark:via-purple-950 dark:to-gray-900 text-gray-100 transition-colors duration-500">
+
+    <!-- Background Decorative Elements -->
+    <div class="absolute top-0 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-pink-500/20 rounded-full blur-3xl pointer-events-none animate-pulse" style="animation-duration: 4s;"></div>
+
+    <!-- Header -->
+    <header class="w-full max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center z-10">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                <i class="fa-solid fa-earth-americas text-white text-base sm:text-lg"></i>
+            </div>
+            <div>
+                <h1 class="text-lg sm:text-xl font-bold tracking-tight bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">CurrencyFlow</h1>
+                <p class="text-xs text-purple-300/80 hidden sm:block">Convert currencies. Explore the world.</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <button id="themeToggle" class="p-2 sm:p-2.5 rounded-xl bg-white/10 hover:bg-white/25 backdrop-blur-md border border-white/10 transition shadow-sm text-yellow-300 dark:text-yellow-400 cursor-pointer" title="Toggle Theme">
+                <i id="themeIcon" class="fa-solid fa-sun text-base sm:text-lg"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="w-full max-w-lg mx-auto px-4 py-4 sm:py-8 z-10 flex-grow flex flex-col justify-center">
+        <!-- Converter Card -->
+        <div class="backdrop-blur-xl bg-white/10 dark:bg-gray-900/60 border border-white/20 dark:border-gray-800/80 rounded-3xl p-5 sm:p-8 shadow-2xl shadow-purple-950/40 relative">
+
+            <div class="text-center mb-5 sm:mb-6">
+                <h2 class="text-xl sm:text-2xl font-bold text-white mb-1">Currency Converter</h2>
+                <p class="text-xs sm:text-sm text-gray-300">Get the latest exchange rates instantly.</p>
+            </div>
+
+            <!-- Converter Form -->
+            <div class="space-y-4">
+                <!-- Amount Input -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-purple-200 mb-1.5">Amount</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+                        <input type="number" id="amount" value="1" min="0" step="any" class="w-full pl-11 pr-4 py-3 sm:py-3.5 bg-white/5 dark:bg-black/30 border border-white/10 dark:border-gray-700/60 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-base sm:text-lg font-medium transition">
+                    </div>
+                </div>
+
+                <!-- Currency Selection Section (Fully Responsive Flex Layout) -->
+                <div class="flex flex-col sm:flex-row items-center gap-3">
+                    <!-- From Currency -->
+                    <div class="w-full sm:flex-1">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-purple-200 mb-1.5">From</label>
+                        <div class="relative">
+                            <select id="fromCurrency" class="w-full pl-4 pr-10 py-3 sm:py-3.5 bg-white/5 dark:bg-black/30 border border-white/10 dark:border-gray-700/60 rounded-2xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium cursor-pointer transition text-sm sm:text-base">
+                                <option value="USD" class="bg-gray-900 text-white">🇺🇸 USD - US Dollar</option>
+                                <option value="EUR" class="bg-gray-900 text-white">🇪🇺 EUR - Euro</option>
+                                <option value="INR" class="bg-gray-900 text-white" selected>🇮🇳 INR - Indian Rupee</option>
+                                <option value="GBP" class="bg-gray-900 text-white">🇬🇧 GBP - British Pound</option>
+                                <option value="JPY" class="bg-gray-900 text-white">🇯🇵 JPY - Japanese Yen</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Swap Button -->
+                    <div class="flex justify-center sm:pt-6">
+                        <button id="swapBtn" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 flex items-center justify-center text-white shadow-lg shadow-purple-600/30 transition transform hover:rotate-180 duration-300 active:scale-95 cursor-pointer shrink-0" title="Swap Currencies">
+                            <i class="fa-solid fa-right-left sm:rotate-90"></i>
+                        </button>
+                    </div>
+
+                    <!-- To Currency -->
+                    <div class="w-full sm:flex-1">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-purple-200 mb-1.5">To</label>
+                        <div class="relative">
+                            <select id="toCurrency" class="w-full pl-4 pr-10 py-3 sm:py-3.5 bg-white/5 dark:bg-black/30 border border-white/10 dark:border-gray-700/60 rounded-2xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium cursor-pointer transition text-sm sm:text-base">
+                                <option value="USD" class="bg-gray-900 text-white" selected>🇺🇸 USD - US Dollar</option>
+                                <option value="EUR" class="bg-gray-900 text-white">🇪🇺 EUR - Euro</option>
+                                <option value="INR" class="bg-gray-900 text-white">🇮🇳 INR - Indian Rupee</option>
+                                <option value="GBP" class="bg-gray-900 text-white">🇬🇧 GBP - British Pound</option>
+                                <option value="JPY" class="bg-gray-900 text-white">🇯🇵 JPY - Japanese Yen</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result Display Box -->
+                <div class="mt-5 sm:mt-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-white/10 backdrop-blur-md">
+                    <div class="text-xs text-purple-200 uppercase font-semibold mb-1">Converted Amount</div>
+                    <div class="flex items-baseline justify-between flex-wrap gap-2">
+                        <div id="convertedResult" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight break-all">--</div>
+                        <div id="exchangeRateInfo" class="text-xs text-gray-300 font-medium">1 USD = -- INR</div>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+                    <div id="updateTime" class="text-xs text-gray-400 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>Updated: Just now</span>
+                    </div>
+                    <button id="refreshBtn" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-medium transition flex items-center justify-center space-x-2 text-purple-200 cursor-pointer">
+                        <i id="refreshIcon" class="fa-solid fa-rotate"></i>
+                        <span>Refresh Rates</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-4xl mx-auto px-4 py-4 text-center z-10 text-xs text-gray-400">
+        <p class="text-[11px] text-gray-500">Exchange rates are indicative and subject to change.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
